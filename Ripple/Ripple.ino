@@ -1,35 +1,34 @@
+// Lighting for Ripple by Jeanie Holt
+// code clean-up: 10/22/2017
+
+/////  Includes  /////
 #include <Adafruit_NeoPixel.h>
-#define LED_PIN A0   // was 6
-#define NUM_LEDS 82   //  led string length number of leds was 30
+
+/////  Defines  /////
+#define LED_PIN A0    //  controller output pin to LEDs
+#define NUM_LEDS 82   //  led string length 
+
+/////  Global Variables  /////
+ int del = 20;  //time delay between loop runs in milliseconds
+ int attack = 1000, sustain = 0, decay = 500;  //length of attack/sustain/decay in milliseconds
+ int vel = 200;  //milliseconds to shift from 1 LED to next 
+ int brt = 0;
+ byte start_LED[] = {21, 17, 13}; // ripple starting location
+ byte max_brt[] = {250, 150, 200};
+ float fade[] = {1.1, 0.9, 1.4};
+ byte done[] = {0, 0, 0};
+ int rip_time[] = {0, 0, 0};
+
+/////  Setup /////
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, LED_PIN, NEO_GRB + NEO_KHZ800);
 
 void setup() {
   Serial.begin(9600);
   strip.begin();
   strip.show(); // Initialize all pixels to 'off'
-/*  strip.setPixelColor(11, 50, 50, 50);
-  uint32_t col = strip.getPixelColor(11);
-  uint8_t here = strip.getPixelColor(11);
-  Serial.print(here);
-  Serial.println(); */
-      }
+  }
    
- int red = 0, green = 0, blue = 0;
- int del = 20;  //time delay in milliseconds
- //was a=1000; s=0; d=500
- int attack = 1000, sustain = 0, decay = 500;  //length of attack/sustain/decay in milliseconds
- int vel = 200;  //milliseconds to shift from 1 LED to next  was 400
- int brt = 0;
- // start_LED were 29, 27, 25  
- byte start_LED[] = {21, 17, 13};
- byte startDelay[] = {0, 0, 0};
- //  max_brt  250, 150, 200
- byte max_brt[] = {250, 150, 200};
- // fade was 1.3, 1.7, 2.0
- float fade[] = {1.1, 0.9, 1.4};
- byte done[] = {0, 0, 0};
- int rip_time[] = {0, 0, 0};
-
+/////  Functions  ///// 
  int changeBright (int t, int temp_brt) {
   if (temp_brt < 0) temp_brt = 0;
     if (t < attack/del) {
@@ -47,43 +46,43 @@ void setup() {
  }
 
  void ripple(int rpl, int r_time) {
-    int temp_brt = max_brt[rpl] - fade[rpl] * r_time;
-    done[rpl] = 1;
+    int temp_brt = max_brt[rpl] - fade[rpl] * r_time; // brightness decreases with time
+    done[rpl] = 1;                      // set done flag
+    
     for (int LEDoffset = 0; LEDoffset < start_LED[rpl] + 1; LEDoffset++) {
+    
+      // for each location offset the ripple pulse will arrive later in time
+      // t_prm becomes local ripple time for the LED at the offset location
       int t_prm = r_time - LEDoffset * vel/del;
       if (t_prm > 0) brt = changeBright (t_prm, temp_brt);
-      else brt = 0;
-      if (brt > 0) done[rpl] = 0;
-      if (r_time == 0) done[rpl] = 0;
+        else brt = 0;
+        
+      if (brt > 0) done[rpl] = 0;       // not done yet if any offset has brightness
+      if (r_time == 0) done[rpl] = 0;   // not done yet
+      
       uint8_t here = strip.getPixelColor(start_LED[rpl] - LEDoffset);
-      if (here > brt) brt = here;
+      if (here > brt) brt = here;       // if LED is brighter don't change
+      
       strip.setPixelColor(start_LED[rpl] - LEDoffset, strip.Color(brt,brt,brt));
     }
  }
- 
-void loop() {  //repeating ripple
-    for (int j = 0; j < 82; j++) {
+
+/////  Main Loop  ///// 
+  void loop() {  //repeating ripple
+    for (int j = 0; j < 82; j++) {  // turn off all LEDs
       strip.setPixelColor(j, strip.Color(0,0,0));
-    }
-        
-      ripple(0, rip_time[0]); //ripple starting on LED 21
-      rip_time[0]++;
-      if (done[0] == 1) rip_time[0] = 0;
-
-       ripple(1, rip_time[1]); //ripple starting on LED 17
-      rip_time[1]++;
-      if (done[1] == 1) rip_time[1] = 0;
-
-       ripple(2, rip_time[2]); //ripple starting on LED 13
-      rip_time[2]++;
-      if (done[2] == 1) rip_time[2] = 0;
+      }
+    
+    for (int i = 0; i < 3; i++) {         // for each ripple    
+      ripple(i, rip_time[i]);             // write ripple to LEDs
+      rip_time[i]++;                      // increment time
+      if (done[i] == 1) rip_time[i] = 0;  // if done start over 
+      }
      
-      for (int j = 41; j < 64; j++) //j is the pixel number
-         {
-           strip.setPixelColor(j, strip.Color(0,0,20)); //bottom color; does not change
-         }
+    for (int j = 41; j < 64; j++) {       // paint light blue across bottom
+      strip.setPixelColor(j, strip.Color(0,0,20)); 
+      }
  
-      strip.show();
-      delay(del); 
-     
-}
+    strip.show();
+    delay(del);     
+  }
