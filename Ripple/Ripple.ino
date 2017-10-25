@@ -1,6 +1,6 @@
 // Lighting for Ripple by Jeanie Holt
 // code clean-up: 10/22/2017
-// top right=23; right bottom=40; bottom left=64; left top=81
+// top right=22; right bottom=40; bottom left=63; left top=81
 
 /////  Includes  /////
 #include <Adafruit_NeoPixel.h>
