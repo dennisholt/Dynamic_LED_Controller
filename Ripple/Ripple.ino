@@ -1,11 +1,12 @@
 // Lighting for Ripple by Jeanie Holt
 // code clean-up: 10/22/2017
+// top right=23; right bottom=40; bottom left=64; left top=81
 
 /////  Includes  /////
 #include <Adafruit_NeoPixel.h>
 
 /////  Defines  /////
-#define LED_PIN A0    //  controller output pin to LEDs
+#define LED_PIN A0    //  data output pin to LED string
 #define NUM_LEDS 82   //  led string length 
 
 /////  Global Variables  /////
@@ -23,6 +24,7 @@
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, LED_PIN, NEO_GRB + NEO_KHZ800);
 
 void setup() {
+  delay(1000);  // Start-up delay for stable start
   Serial.begin(9600);
   strip.begin();
   strip.show(); // Initialize all pixels to 'off'
@@ -44,7 +46,7 @@ void setup() {
     else {brt = 0;}
     return brt;
  }
-
+ 
  void ripple(int rpl, int r_time) {
     int temp_brt = max_brt[rpl] - fade[rpl] * r_time; // brightness decreases with time
     done[rpl] = 1;                      // set done flag

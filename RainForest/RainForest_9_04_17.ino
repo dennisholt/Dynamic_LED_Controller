@@ -25,6 +25,9 @@
 #define DEBUG_DELAY(ms) FastLED.delay(ms)  // Normally just delay(ms), change if you need a special delay function like FastLED.delay(ms)
 #define MSG_DELAY 5           // number of loops between repeating state blink
 #define TUNING 0  // 1 to enable tuning button & knob (slower), 0 to disable for normal running (faster)
+// 1 to enable development button & knob, 0 to disable Arduino doesn't work well when not connected
+//  This program doesn't utilize these inputs at this time. If later include in #if TUNING ... #endif 
+//  to disable program sections when dev board in not in use. 
 
 //  Global Variables
 CRGB leds[NUM_LEDS];  // Array for LED color values
