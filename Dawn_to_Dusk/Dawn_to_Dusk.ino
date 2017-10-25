@@ -15,74 +15,74 @@
 // co[LED][color][brk_pnt] reserved space for 12 breakpoints just in case
 // color=0 is distance to previous breakpoint; color=1,2,3 is Red,Green,Blue
 uint8_t co[12][4][12]={
-   {                           // LED 0  Top left hand corner    8
-      {0,8,24, 25, 12, 18,25,14}, // distance from last breakpoint
+   {                           // LED 0  Top left hand corner 
+      {0,7,23, 24, 11, 17,24,13}, // distance from last breakpoint
       {0,7,85,239,239,100, 0, 0},  // break point red value
       {0,4,48,239,239, 50, 0, 0}, //             green
       {0,6,70,186,286,  5, 0, 0}   //             blue
    },
-   {                        // LED 10  center of top    9
-      {0,11,21, 26, 11, 13,  6,30,9}, 
+   {                        // LED 10  center of top 
+      {0,10,20, 25, 10, 12,  5,29,8}, 
       {0, 7,85,255,255,191,200, 0,0},
       {0, 4,48,255,255,191,100, 0,0},
       {0, 6,70,200,200,150, 10, 0,0}
    },
-   {                        // LED 20  upper right hand side   11
-      {0,14,18, 26, 11, 13,  6,  8,23,4,6}, 
+   {                        // LED 20  upper right hand side   11 break-points
+      {0,13,17, 25, 10, 12,  5,  7,22,3,5}, 
       {0, 7,85,255,255,225,200,100,25,0,0},
       {0, 4,48,255,255,200,100, 25, 0,0,0},
       {0, 6,70,200,200,100, 10,  0, 0,0,0}
    },
-   {                        // LED 34         11
-      {0,16,16, 22, 15, 11,  8,  9,24,4,4}, 
+   {                        // LED 34         11 break-points
+      {0,15,15, 21, 14, 10,  7,  8,23,3,3}, 
       {0, 7,85,207,207,225,200,100,25,0,0},
       {0, 4,48,207,207,200,100, 25, 0,0,0},
       {0, 6,70,162,162,100, 10,  0, 0,0,0}
    },
-   {                        // LED 38       12
-      {0,17,15, 20, 17, 10,  7, 11, 9,18,4,2}, 
+   {                        // LED 38       12 break-points
+      {0,16,14, 19, 16,  9,  6, 10, 8,17,3,1}, 
       {0, 7,85,191,191,225,200,200,90,25,0,0},
       {0, 4,48,191,191,200,100, 50,15, 0,0,0},
       {0, 6,70,150,150,100, 10, 10, 0, 0,0,0}
    },
-   {                        // LED 42     Right side Bottom    11
-      {0,18,14, 20, 17,  9,  7, 11,11,18,4}, 
+   {                        // LED 42     Right side Bottom    11 break-points
+      {0,17,13, 19, 16,  8,  6, 10,10,17,3}, 
       {0, 7,85,191,191,225,200,200,90,25,0},
       {0, 4,48,191,191,200,100, 50,15, 0,0},
       {0, 6,70,150,150,100, 10, 10, 0, 0,0}
    },
-      {                     // LED 43 lower left hand corner    6
-      {0,31,20,17,35,21},   
+      {                     // LED 43 lower left hand corner
+      {0,30,19,16,34,20},   
       {0, 0, 0, 0, 0, 0},   
       {0, 0, 0, 0, 0, 0},   
       {0, 0, 0, 0, 0, 0}   
    },      
-      {                     // LED 62 lower left hand corner    6
-      {0,31,20,17,35,21},   
+      {                     // LED 62 lower left hand corner
+      {0,30,19,16,34,20},   
       {0, 0, 0, 0, 0, 0},   
       {0, 0, 0, 0, 0, 0},   
       {0, 0, 0, 0, 0, 0}   
    },   
-      {                     // LED 63 lower left hand corner  6
-      {0, 31, 20, 17,35,21},   
+      {                     // LED 63 lower left hand corner
+      {0, 30, 19, 16,34,20},   
       {1, 80,191,191, 0, 0},   
       {0, 30,191,191, 0, 0},   
       {1,100,150,150, 0, 0}   
    },
-   {                        // LED 67    7
-      {0,3,29, 20, 17,37,19}, 
+   {                        // LED 67
+      {0,2,28, 19, 16,36,18}, 
       {0,1,77,191,191, 0, 0},
       {0,0,29,191,191, 0, 0},
       {0,1,97,150,150, 0, 0}
    },
-    {                        // LED 71    7
-      {0,5,27, 20, 17,39,17}, 
+    {                        // LED 71
+      {0,4,26, 19, 16,38,16}, 
       {0,4,77,191,191, 0, 0},
       {0,1,29,191,191, 0, 0},
       {0,4,97,150,150, 0, 0}
    },
-      {                        // LED 85   upper left hand side 8
-      {0,8,24, 25, 12, 18,25,14}, 
+      {                        // LED 85   upper left hand side 
+      {0,7,23, 24, 11, 17,24,13}, 
       {0,7,85,239,239,100, 0, 0},
       {0,4,48,239,239, 50, 0, 0},
       {0,6,70,186,286,  5, 0, 0}
@@ -110,9 +110,9 @@ void setup() {
 /////  Main Loop  ///// 
 void loop() {
 //Set up for start of dawn; will come back here at end of "night"
-  for (uint8_t k = 0; k < 12; k++){   // for each reference LED
+  for (uint8_t k = 0; k < 12; k++){     // for each reference LED
     brk[k] = 0; //  keep track of index into co[][][] array
-    dis[k] = co[k][0][0]; // distance to previous breakpoint (starts as 0)
+    dis[k] = co[k][0][0];               // distance to previous breakpoint (starts as 0)
     }
  //Timing loop every half second calculate new lighting values
   for (uint8_t t = 0; t < 120; t++){    // each time tick
@@ -120,7 +120,7 @@ void loop() {
     for (uint8_t k = 0; k < 12; k++){   // each indicator LED
       if (dis[k] <= 0){  // are we at the next break-point?
         brk[k]++; // up-date break-point counter for this indicator LED
-        dis[k] = co[k][0][brk[k]] - 1;  // time increments to the next break-point
+        dis[k] = co[k][0][brk[k]];      // time increments to the next break-point
         for (uint8_t i = 0; i < 3; i++){
           nowa[k][i] = co[k][i + 1][brk[k]-1];  // values where we are at
           next[k][i] = co[k][i + 1][brk[k]];    // values at the next break-point
@@ -154,10 +154,10 @@ void loop() {
         }   
       strip.show();
       delay(100);
-      }
-    }  // end timing loop
-// while(1){/* stop here */}  // potential debub inertupt
-  delay(3000);  // delay for night time then restart dawn to dusk
+      }                         // end time dithering
+    }                           // end timing loop
+// while(1){/* stop here */}    // potential debub inertupt
+  delay(3000);                  // delay for night time then restart dawn to dusk
 }
   
  
